@@ -92,13 +92,12 @@ public class IntegerSet {
 
 	
 	/**
-	 *
 	 * smallest() method
 	 * @return the smallest item in the set; Throws a IntegerSetException if the set is empty 
 	 * @throws IntegerSetException if the set is empty.
 	 */
      public int smallest() throws IntegerSetException {
-    	 if (this.set.isEmpty()) {
+    	if (this.set.isEmpty()) {
  			throw new IntegerSetException("This set is empty.");
  		}
  		int smallest = this.set.get(0);	
@@ -139,32 +138,72 @@ public class IntegerSet {
 	
 	/**
 	 * union() method
-	 * Set union
+	 * Set union, saves result to Set a
 	 * @param intSetb: set to unionize with
 	 */
-	public void union(IntegerSet intSetb) {};
+	public void union(IntegerSet intSetb) {
+		for (int i = 0; i < intSetb.length(); i++) {
+			int num = intSetb.set.get(i);
+			if(!this.set.contains(num)) {
+				this.set.add(num);
+			}
+		}
+	};
 
 	/**
 	 * intersect() method
-	 * Set intersection, all elements in s1 and s2
+	 * Set intersection, saves intersecting elements to s1 non-intersecting elements to s2
 	 * @param intSetb: set to intersect
 	 */
-	public void intersect(IntegerSet intSetb) {}; 
+	public void intersect(IntegerSet intSetb) {
+		List<Integer> intersecting = new ArrayList<Integer>();
+		IntegerSet nonIntersecting = new IntegerSet(null);
+		for (int i = 0; i < this.set.size(); i++) {
+			if (intSetb.contains(this.set.get(i))) {
+				intersecting.add(this.set.get(i));
+			} else {
+				nonIntersecting.add(this.set.get(i));
+			}
+		}
+		for (int j = 0; j < intSetb.length(); j++) {
+			if (this.set.contains(intSetb.set.get(j)) && (!intersecting.contains(intSetb.set.get(j)))) {
+				intersecting.add(intSetb.set.get(j));
+			} else {
+				nonIntersecting.add(intSetb.set.get(j));
+			}
+		}
+		this.set = intersecting;
+		intSetb = nonIntersecting;
+		
+	}; 
 	
 	/**
 	 * diff() method
-	 * // set difference, i.e. s1 - s2
+	 * // set difference, i.e. s1 - s2, stores result in s1
 	 * @param intSetb: set to find difference for
 	 */
 	public void diff(IntegerSet intSetb) {
+		for (int i = 0; i < this.set.size(); i++) {
+			if (intSetb.contains(this.set.get(i))) {
+				this.set.remove(i);
+				i--;
+			}
+		}
 	} 
 
 	/**
 	 * complement() method
-	 * // Set complement, all elements not in s1
+	 * // Set complement, all elements not in s1, stores result in s1
 	 * @param intSetb: set to find difference for
 	 */
 	public void complement(IntegerSet intSetb) {
+		List<Integer> complement = new ArrayList<Integer>();
+		for (int j = 0; j < intSetb.length(); j++) {
+			if (!this.set.contains(intSetb.set.get(j))) {
+				complement.add(intSetb.set.get(j));
+			}
+		}
+		this.set = complement;
 	}
 
 	/**
