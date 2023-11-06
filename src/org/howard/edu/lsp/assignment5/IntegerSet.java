@@ -2,11 +2,14 @@ package org.howard.edu.lsp.assignment5;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class IntegerSet {
 	private List<Integer> set = new ArrayList<Integer>();
 	
+	
+	public IntegerSet() {
+		
+	}
 	/**
 	 * Constructor if you want to pass in already initialized
 	 */
