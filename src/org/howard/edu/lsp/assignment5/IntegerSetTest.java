@@ -4,6 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class IntegerSetTest {
 	private IntegerSet set0;
 	private IntegerSet set1;
@@ -78,6 +83,14 @@ public class IntegerSetTest {
 	}
 	
 	@Test
+	@DisplayName ("test largest exception")
+	public void testLargestException() throws IntegerSetException {
+		Throwable exception = assertThrows(IntegerSetException.class, () -> set0.largest());
+		assertNotNull(exception.getMessage());
+		assertEquals("This set is empty.", exception.getMessage());
+	}
+	
+	@Test
 	@DisplayName("test smallest")
 	public void testSmallest() throws IntegerSetException {
 		assertEquals(set1.smallest(), 1);
@@ -85,10 +98,97 @@ public class IntegerSetTest {
 	}
 	
 	@Test
+	@DisplayName ("test smallest exception")
+	public void testSmallestException() throws IntegerSetException {
+		Throwable exception = assertThrows(IntegerSetException.class, () -> set0.smallest());
+		assertNotNull(exception.getMessage());
+		assertEquals("This set is empty.", exception.getMessage());
+	}
+	
+	@Test
 	@DisplayName("test add")
 	public void testAdd() {
-		assertTrue(set1.contains(3) == true);
-		assertTrue(set2.contains(8) == false);
+		set0.add(0);
+        set1.add(5);
+		assertTrue(set0.toString() == "[0]");
+		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+	}
+	
+	@Test
+	@DisplayName("test remove")
+	public void testRemove() {
+		set0.remove(0);
+        set1.remove(3);
+		assertTrue(set0.toString() == "[]");
+		assertTrue(set1.toString() == "[1, 2, 4, 5]");
+	}
+	
+	@Test
+	@DisplayName("test union")
+	public void testUnion() {
+		set1.union(set2);
+		assertTrue(set1.toString() == "[1, 2, 3, 4, 5, 6, 7, 8]");
+		
+        set0.union(set1);
+		assertTrue(set0.toString() == "[1, 2, 3, 4, 5]");
+		
+		set2.union(set3);
+		assertTrue(set2.toString() == "[3, 4, 5, 6, 7, 8]");
+	}
+	
+	@Test
+	@DisplayName("test intersect")
+	public void testIntersect() {
+		set1.intersect(set2);
+		assertTrue(set1.toString() == "[3, 4, 5]");
+		
+        set0.intersect(set1);
+		assertTrue(set0.toString() == "[]");
+		
+		set2.intersect(set3);
+		assertTrue(set2.toString() == "[3, 4, 5, 6, 7, 8]");
+	}
+	
+	@Test
+	@DisplayName("test difference")
+	public void testDiff() {
+		set1.diff(set2);
+		assertTrue(set1.toString() == "[1, 2]");
+		
+        set1.diff(set0);
+		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+		
+		set2.diff(set3);
+		assertTrue(set2.toString() == "[]");
+	}
+	
+	@Test
+	@DisplayName("test complement")
+	public void testComplement() {
+		set1.complement(set2);
+		assertTrue(set1.toString() == "[6, 7, 8]");
+		
+        set0.complement(set1);
+		assertTrue(set0.toString() == "[1, 2, 3, 4, 5]");
+		
+		set2.complement(set3);
+		assertTrue(set2.toString() == "[]");
+	}
+	
+	@Test
+	@DisplayName("test isEmpty")
+	public void testIsEmpty() {
+		assertTrue(set0.isEmpty() == "true");
+		assertTrue(set1.isEmpty() == "false");
+		
+	}
+	
+	@Test
+	@DisplayName("test toString")
+	public void testToString() {
+		assertTrue(set0.toString() == "[]");
+		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+		
 	}
 	
 	
