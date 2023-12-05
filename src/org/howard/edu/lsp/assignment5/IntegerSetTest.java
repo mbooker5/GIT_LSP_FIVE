@@ -49,6 +49,7 @@ public class IntegerSetTest {
 	@Test
 	@DisplayName("test clear")
 	public void testClear() {
+		set1.clear();
 		assertTrue(set1.isEmpty() == true);
 		assertTrue(set2.isEmpty() == false);
 	}
@@ -71,8 +72,8 @@ public class IntegerSetTest {
 	@Test
 	@DisplayName("test contains")
 	public void testContains() {
-		assertTrue(set1.contains(3) == true);
-		assertTrue(set2.contains(8) == false);
+		assertEquals(set1.contains(3), true);
+		assertEquals(set2.contains(9), false);
 	}
 	
 	@Test
@@ -110,8 +111,8 @@ public class IntegerSetTest {
 	public void testAdd() {
 		set0.add(0);
         set1.add(5);
-		assertTrue(set0.toString() == "[0]");
-		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+		assertEquals(set0.toString(), "[0]");
+		assertEquals(set1.toString(), "[1, 2, 3, 4, 5]");
 	}
 	
 	@Test
@@ -119,75 +120,69 @@ public class IntegerSetTest {
 	public void testRemove() {
 		set0.remove(0);
         set1.remove(3);
-		assertTrue(set0.toString() == "[]");
-		assertTrue(set1.toString() == "[1, 2, 4, 5]");
+		assertEquals(set0.toString(), "[]");
+		assertEquals(set1.toString(), "[1, 2, 4, 5]");
 	}
 	
 	@Test
 	@DisplayName("test union")
 	public void testUnion() {
 		set1.union(set2);
-		assertTrue(set1.toString() == "[1, 2, 3, 4, 5, 6, 7, 8]");
+		assertEquals(set1.toString(), "[1, 2, 3, 4, 5, 6, 7, 8]");
 		
-        set0.union(set1);
-		assertTrue(set0.toString() == "[1, 2, 3, 4, 5]");
-		
-		set2.union(set3);
-		assertTrue(set2.toString() == "[3, 4, 5, 6, 7, 8]");
+		set0.union(set3);
+		assertEquals(set0.toString(), "[3, 4, 5, 6, 7, 8]");
 	}
 	
 	@Test
 	@DisplayName("test intersect")
 	public void testIntersect() {
 		set1.intersect(set2);
-		assertTrue(set1.toString() == "[3, 4, 5]");
+		assertEquals(set1.toString(), "[3, 4, 5]");
 		
         set0.intersect(set1);
-		assertTrue(set0.toString() == "[]");
+		assertEquals(set0.toString(), "[]");
 		
 		set2.intersect(set3);
-		assertTrue(set2.toString() == "[3, 4, 5, 6, 7, 8]");
+		assertEquals(set2.toString(), "[3, 4, 5, 6, 7, 8]");
 	}
 	
 	@Test
 	@DisplayName("test difference")
 	public void testDiff() {
 		set1.diff(set2);
-		assertTrue(set1.toString() == "[1, 2]");
+		assertEquals(set1.toString(), "[1, 2]");
 		
         set1.diff(set0);
-		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+		assertEquals(set1.toString(), "[1, 2]");
 		
 		set2.diff(set3);
-		assertTrue(set2.toString() == "[]");
+		assertEquals(set2.toString(), "[]");
 	}
 	
 	@Test
 	@DisplayName("test complement")
 	public void testComplement() {
 		set1.complement(set2);
-		assertTrue(set1.toString() == "[6, 7, 8]");
+		assertEquals(set1.toString(), "[6, 7, 8]");
 		
-        set0.complement(set1);
-		assertTrue(set0.toString() == "[1, 2, 3, 4, 5]");
-		
-		set2.complement(set3);
-		assertTrue(set2.toString() == "[]");
+        set0.complement(set3);
+		assertEquals(set0.toString(), "[3, 4, 5, 6, 7, 8]");
 	}
 	
 	@Test
 	@DisplayName("test isEmpty")
 	public void testIsEmpty() {
-		assertTrue(set0.isEmpty() == "true");
-		assertTrue(set1.isEmpty() == "false");
+		assertTrue(set0.isEmpty() == true);
+		assertTrue(set1.isEmpty() == false);
 		
 	}
 	
 	@Test
 	@DisplayName("test toString")
 	public void testToString() {
-		assertTrue(set0.toString() == "[]");
-		assertTrue(set1.toString() == "[1, 2, 3, 4, 5]");
+		assertEquals(set0.toString(), "[]");
+		assertEquals(set1.toString(), "[1, 2, 3, 4, 5]");
 		
 	}
 	
