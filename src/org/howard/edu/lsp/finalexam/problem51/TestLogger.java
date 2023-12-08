@@ -21,7 +21,6 @@ public class TestLogger {
         Logger logger1 = Logger.getInstance();
         Logger logger2 = Logger.getInstance();
 
-        // Ensure that logger1 and logger2 refer to the same instance
         assertSame(logger1, logger2);
     }
 }
